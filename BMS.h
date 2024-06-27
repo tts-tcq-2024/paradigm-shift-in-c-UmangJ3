@@ -1,8 +1,7 @@
 #ifndef BMS_H
 #define BMS_H
 
-typedef enum 
-{
+typedef enum {
   OK,
   TEMPERATURE_LOW,
   TEMPERATURE_HIGH,
@@ -14,9 +13,7 @@ typedef enum
 const char* getStatusMessage(BatteryStatus status);
 BatteryStatus evaluateBattery(float temperature, float soc, float chargeRate);
 int batteryIsOk(float temperature, float soc, float chargeRate);
-
 int isTemperatureOutOfRange(float temperature);
 int isSocOutOfRange(float soc);
 int isChargeRateOutOfRange(float chargeRate);
-
 #endif // BMS_H
