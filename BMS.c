@@ -1,15 +1,5 @@
 #include <stdio.h>
-#include <assert.h>
-
-typedef enum 
-{
-  OK,
-  TEMPERATURE_LOW,
-  TEMPERATURE_HIGH,
-  SOC_LOW,
-  SOC_HIGH,
-  CHARGE_RATE_HIGH
-} BatteryStatus;
+#include "BMS.h"
 
 const char* getStatusMessage(BatteryStatus status) 
 {
@@ -54,20 +44,4 @@ int batteryIsOk(float temperature, float soc, float chargeRate)
   BatteryStatus status = evaluateBattery(temperature, soc, chargeRate);
   printf("%s\n", getStatusMessage(status));
   return status == OK;
-}
-
-void testBatteryStatus() 
-{
-  assert(batteryIsOk(25, 70, 0.7));
-  assert(!batteryIsOk(50, 85, 0.0));
-  assert(!batteryIsOk(-1, 50, 0.5));
-  assert(!batteryIsOk(25, 19, 0.5));
-  assert(!batteryIsOk(25, 50, 0.9));
-  
-}
-
-int main() 
-{
-  testBatteryStatus();
-  return 0;
 }
