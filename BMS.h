@@ -15,4 +15,8 @@ const char* getStatusMessage(BatteryStatus status);
 BatteryStatus evaluateBattery(float temperature, float soc, float chargeRate);
 int batteryIsOk(float temperature, float soc, float chargeRate);
 
+int isTemperatureOutOfRange(float temperature);
+int isSocOutOfRange(float soc);
+int isChargeRateOutOfRange(float chargeRate);
+
 #endif // BMS_H
