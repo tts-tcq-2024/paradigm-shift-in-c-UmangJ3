@@ -21,16 +21,24 @@ const char* getStatusMessage(BatteryStatus status) {
 }
 
 BatteryStatus evaluateBattery(float temperature, float soc, float chargeRate) {
-    if (isTemperatureOutOfRange(temperature)) {
-        return TEMPERATURE_LOW;
+    int temperatureOutOfRange = isTemperatureOutOfRange(temperature);
+    int socOutOfRange = isSocOutOfRange(soc);
+    int chargeRateOutOfRange = isChargeRateOutOfRange(chargeRate);
+    BatteryStatus status = OK;
+
+    if (temperatureOutOfRange) {
+        if (socOutOfRange || chargeRateOutOfRange) {
+            status = TEMPERATURE_LOW;
+        }
+    } else {
+        if (socOutOfRange) {
+            status = SOC_LOW;
+        } else if (chargeRateOutOfRange) {
+            status = CHARGE_RATE_HIGH;
+        }
     }
-    if (isSocOutOfRange(soc)) {
-        return SOC_LOW;
-    }
-    if (isChargeRateOutOfRange(chargeRate)) {
-        return CHARGE_RATE_HIGH;
-    }
-    return OK;
+
+    return status;
 }
 
 int isTemperatureOutOfRange(float temperature) {
