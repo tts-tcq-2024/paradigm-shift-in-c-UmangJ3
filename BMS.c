@@ -47,6 +47,5 @@ int isChargeRateOutOfRange(float chargeRate) {
 
 int batteryIsOk(float temperature, float soc, float chargeRate) {
     BatteryStatus status = evaluateBattery(temperature, soc, chargeRate);
-    printf("%s\n", getStatusMessage(status));
     return status == OK;
 }
