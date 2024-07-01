@@ -24,16 +24,30 @@ BatteryStatus evaluateBattery(float temperature, float soc, float chargeRate) {
     int temperatureOutOfRange = isTemperatureOutOfRange(temperature);
     int socOutOfRange = isSocOutOfRange(soc);
     int chargeRateOutOfRange = isChargeRateOutOfRange(chargeRate);
-    BatteryStatus status = OK;
 
-    if (temperatureOutOfRange && (socOutOfRange || chargeRateOutOfRange)) {
-        status = TEMPERATURE_LOW;
-    } else if (!temperatureOutOfRange && socOutOfRange) {
-        status = SOC_LOW;
-    } else if (!temperatureOutOfRange && chargeRateOutOfRange) {
-        status = CHARGE_RATE_HIGH;
+    if (temperatureOutOfRange) {
+        return evaluateTemperatureOutOfRange(socOutOfRange, chargeRateOutOfRange);
+    } else {
+        return evaluateTemperatureWithinRange(socOutOfRange, chargeRateOutOfRange);
     }
-    return status;
+}
+
+BatteryStatus evaluateTemperatureOutOfRange(int socOutOfRange, int chargeRateOutOfRange) {
+    if (socOutOfRange || chargeRateOutOfRange) {
+        return TEMPERATURE_LOW;
+    } else {
+        return OK;
+    }
+}
+
+BatteryStatus evaluateTemperatureWithinRange(int socOutOfRange, int chargeRateOutOfRange) {
+    if (socOutOfRange) {
+        return SOC_LOW;
+    } else if (chargeRateOutOfRange) {
+        return CHARGE_RATE_HIGH;
+    } else {
+        return OK;
+    }
 }
 
 int isTemperatureOutOfRange(float temperature) {
