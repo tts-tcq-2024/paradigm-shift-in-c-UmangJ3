@@ -12,6 +12,8 @@ typedef enum {
 
 const char* getStatusMessage(BatteryStatus status);
 BatteryStatus evaluateBattery(float temperature, float soc, float chargeRate);
+BatteryStatus evaluateTemperatureOutOfRange(int socOutOfRange, int chargeRateOutOfRange);
+BatteryStatus evaluateTemperatureWithinRange(int socOutOfRange, int chargeRateOutOfRange);
 int batteryIsOk(float temperature, float soc, float chargeRate);
 int isTemperatureOutOfRange(float temperature);
 int isSocOutOfRange(float soc);
