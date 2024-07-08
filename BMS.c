@@ -57,19 +57,6 @@ BatteryStatus evaluateBattery(float temperature, float soc, float chargeRate) {
     return evaluateChargeRate(chargeRate);
 }
 
-int isTemperatureOutOfRange(float temperature) {
-    return (temperature < 0 || temperature > 45);
-}
-
-int isSocOutOfRange(float soc) {
-    return (soc < 20 || soc > 80);
-}
-
-int isChargeRateOutOfRange(float chargeRate) {
-    return (chargeRate > 0.8);
-}
-
 int batteryIsOk(float temperature, float soc, float chargeRate) {
-    BatteryStatus status = evaluateBattery(temperature, soc, chargeRate);
-    return status == OK;
+    return evaluateBattery(temperature, soc, chargeRate) == OK;
 }
