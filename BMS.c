@@ -2,7 +2,6 @@
 #include "BMS.h"
 
 const char* getStatusMessage(BatteryStatus status) {
-    // Define a lookup table for status messages
     static const char* statusMessages[] = {
         [TEMPERATURE_LOW] = "Temperature too low!",
         [TEMPERATURE_HIGH] = "Temperature too high!",
@@ -12,42 +11,50 @@ const char* getStatusMessage(BatteryStatus status) {
         [OK] = "Battery is OK."
     };
 
-    // Validate the status and return the corresponding message
     if (status < 0 || status >= sizeof(statusMessages) / sizeof(statusMessages[0])) {
-        return "Unknown status"; // Handle unexpected status
+        return "Unknown status";
     }
 
     return statusMessages[status];
 }
 
-BatteryStatus evaluateBattery(float temperature, float soc, float chargeRate) {
-    int temperatureOutOfRange = isTemperatureOutOfRange(temperature);
-    int socOutOfRange = isSocOutOfRange(soc);
-    int chargeRateOutOfRange = isChargeRateOutOfRange(chargeRate);
-
-    if (temperatureOutOfRange) {
-        return evaluateTemperatureOutOfRange(socOutOfRange, chargeRateOutOfRange);
-    } else {
-        return evaluateTemperatureWithinRange(socOutOfRange, chargeRateOutOfRange);
-    }
-}
-
-BatteryStatus evaluateTemperatureOutOfRange(int socOutOfRange, int chargeRateOutOfRange) {
-    if (socOutOfRange || chargeRateOutOfRange) {
+BatteryStatus evaluateTemperature(float temperature) {
+    if (temperature < 0) {
         return TEMPERATURE_LOW;
-    } else {
-        return OK;
+    } else if (temperature > 45) {
+        return TEMPERATURE_HIGH;
     }
+    return OK;
 }
 
-BatteryStatus evaluateTemperatureWithinRange(int socOutOfRange, int chargeRateOutOfRange) {
-    if (socOutOfRange) {
+BatteryStatus evaluateSoc(float soc) {
+    if (soc < 20) {
         return SOC_LOW;
-    } else if (chargeRateOutOfRange) {
-        return CHARGE_RATE_HIGH;
-    } else {
-        return OK;
+    } else if (soc > 80) {
+        return SOC_HIGH;
     }
+    return OK;
+}
+
+BatteryStatus evaluateChargeRate(float chargeRate) {
+    if (chargeRate > 0.8) {
+        return CHARGE_RATE_HIGH;
+    }
+    return OK;
+}
+
+BatteryStatus evaluateBattery(float temperature, float soc, float chargeRate) {
+    BatteryStatus tempStatus = evaluateTemperature(temperature);
+    if (tempStatus != OK) {
+        return tempStatus;
+    }
+
+    BatteryStatus socStatus = evaluateSoc(soc);
+    if (socStatus != OK) {
+        return socStatus;
+    }
+
+    return evaluateChargeRate(chargeRate);
 }
 
 int isTemperatureOutOfRange(float temperature) {
