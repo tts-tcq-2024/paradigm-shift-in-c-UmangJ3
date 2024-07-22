@@ -43,22 +43,18 @@ BatteryStatus evaluateChargeRate(float chargeRate) {
     return OK;
 }
 
-BatteryStatus evaluateParameter(float parameter, BatteryStatus (*evaluationFunction)(float)) {
-    return evaluationFunction(parameter);
+int isTemperatureOk(float temperature) {
+    return evaluateTemperature(temperature) == OK;
 }
 
-BatteryStatus evaluateBatteryStatus(float temperature, float soc, float chargeRate) {
-    BatteryStatus status = evaluateParameter(temperature, evaluateTemperature);
-    if (status != OK) {
-        return status;
-    }
-    status = evaluateParameter(soc, evaluateSoc);
-    if (status != OK) {
-        return status;
-    }
-    return evaluateParameter(chargeRate, evaluateChargeRate);
+int isSocOk(float soc) {
+    return evaluateSoc(soc) == OK;
+}
+
+int isChargeRateOk(float chargeRate) {
+    return evaluateChargeRate(chargeRate) == OK;
 }
 
 int batteryIsOk(float temperature, float soc, float chargeRate) {
-    return evaluateBatteryStatus(temperature, soc, chargeRate) == OK;
+    return isTemperatureOk(temperature) && isSocOk(soc) && isChargeRateOk(chargeRate);
 }
