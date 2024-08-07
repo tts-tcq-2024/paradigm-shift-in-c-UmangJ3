@@ -1,6 +1,6 @@
 #ifndef BATTERY_CHECKER_H
 #define BATTERY_CHECKER_H
-
+#include "messages.h"
 typedef enum { ENGLISH, GERMAN } Language;
 
 extern Language currentLanguage;
