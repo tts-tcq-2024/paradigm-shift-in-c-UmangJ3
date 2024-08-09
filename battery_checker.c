@@ -63,36 +63,29 @@ int batteryIsOk(float temperature, float soc, float chargeRate) {
            checkChargeRate(chargeRate);
 }
 
-void testBatteryStatus(float temperature, float soc, float chargeRate, int expectedStatus) {
-    int status = batteryIsOk(temperature, soc, chargeRate);
-    assert(status == expectedStatus);
-}
+
 
 void runTests() {
 
     currentLanguage = ENGLISH;
     assert(batteryIsOk(25, 70, 0.7));
     assert(!batteryIsOk(50, 85, 0));
-   /*
-    testBatteryStatus(25.0, 70.0, 0.7, 1);
 
-    testBatteryStatus(50.0, 70.0, 0.7, 0);
-    testBatteryStatus(25.0, 85.0, 0.7, 0);
-    testBatteryStatus(25.0, 70.0, 0.9, 0);
+    assert(!batteryIsOk(50.0, 70.0, 0.7));
+    assert(!batteryIsOk(25.0, 85.0, 0.7));
+    assert(!batteryIsOk(25.0, 70.0, 0.9));
 
-    testBatteryStatus(45.0, 70.0, 0.7, 1);
-    testBatteryStatus(0.0, 70.0, 0.7, 1);
-    testBatteryStatus(25.0, 80.0, 0.7, 1);
-    testBatteryStatus(25.0, 20.0, 0.7, 1);
-    testBatteryStatus(25.0, 70.0, 0.8, 1);
-
-    testBatteryStatus(TEMP_LOWER_LIMIT + TEMP_UPPER_LIMIT * TOLERANCE - 0.1, 70.0, 0.7, 1);
-    testBatteryStatus(TEMP_UPPER_LIMIT - TEMP_UPPER_LIMIT * TOLERANCE + 0.1, 70.0, 0.7, 1);
-    testBatteryStatus(25.0, SOC_LOWER_LIMIT + SOC_UPPER_LIMIT * TOLERANCE - 0.1, 0.7, 1);
-    testBatteryStatus(25.0, SOC_UPPER_LIMIT - SOC_UPPER_LIMIT * TOLERANCE + 0.1, 0.7, 1);
-    testBatteryStatus(25.0, 70.0, CHARGE_RATE_UPPER_LIMIT - CHARGE_RATE_UPPER_LIMIT * TOLERANCE + 0.1, 1);
-
-  */
+    assert(batteryIsOk(45.0, 70.0, 0.7));
+    assert(batteryIsOk(0.0, 70.0, 0.7));
+    assert(batteryIsOk(25.0, 80.0, 0.7));
+    assert(batteryIsOk(25.0, 20.0, 0.7));
+    assert(batteryIsOk(25.0, 70.0, 0.8));
+    
+    assert(batteryIsOk(TEMP_LOWER_LIMIT + TEMP_UPPER_LIMIT * TOLERANCE - 0.1, 70.0, 0.7));
+    assert(batteryIsOk(TEMP_UPPER_LIMIT - TEMP_UPPER_LIMIT * TOLERANCE + 0.1, 70.0, 0.7));
+    assert(batteryIsOk(25.0, SOC_LOWER_LIMIT + SOC_UPPER_LIMIT * TOLERANCE - 0.1, 0.7));
+    assert(batteryIsOk(25.0, SOC_UPPER_LIMIT - SOC_UPPER_LIMIT * TOLERANCE + 0.1, 0.7));
+    assert(batteryIsOk(25.0, 70.0, CHARGE_RATE_UPPER_LIMIT - CHARGE_RATE_UPPER_LIMIT * TOLERANCE + 0.1, 1));
     
     currentLanguage = GERMAN;
     assert(batteryIsOk(25, 70, 0.7));
