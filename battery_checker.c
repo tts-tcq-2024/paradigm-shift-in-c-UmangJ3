@@ -85,7 +85,7 @@ void runTests() {
     assert(batteryIsOk(TEMP_UPPER_LIMIT - TEMP_UPPER_LIMIT * TOLERANCE + 0.1, 70.0, 0.7));
     assert(batteryIsOk(25.0, SOC_LOWER_LIMIT + SOC_UPPER_LIMIT * TOLERANCE - 0.1, 0.7));
     assert(batteryIsOk(25.0, SOC_UPPER_LIMIT - SOC_UPPER_LIMIT * TOLERANCE + 0.1, 0.7));
-    assert(batteryIsOk(25.0, 70.0, CHARGE_RATE_UPPER_LIMIT - CHARGE_RATE_UPPER_LIMIT * TOLERANCE + 0.1, 1));
+    assert(batteryIsOk(25.0, 70.0, CHARGE_RATE_UPPER_LIMIT - CHARGE_RATE_UPPER_LIMIT * TOLERANCE + 0.1));
     
     currentLanguage = GERMAN;
     assert(batteryIsOk(25, 70, 0.7));
