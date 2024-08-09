@@ -12,7 +12,6 @@ void checkAndPrintWarning(float value, float lower, float upper, Messages msg);
 int checkValue(float value, float lower, float upper, Messages msg);
 int checkChargeRate(float chargeRate);
 int batteryIsOk(float temperature, float soc, float chargeRate);
-void testBatteryStatus(float temperature, float soc, float chargeRate, int expectedStatus);
 void runTests();
 
 #endif
